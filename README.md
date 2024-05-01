@@ -39,4 +39,4 @@ Hi, I am cryptvault.! I am a simple project that allows you to encrypt and decry
 - Python
 - Secure Shell Hashing
 
-Feel free to explore and experiment with different encryption and decryption techniques using CryptVault!
+Feel free to explore and experiment with different encryption and decryption techniques using cryptvault.!
