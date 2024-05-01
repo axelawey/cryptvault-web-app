@@ -1,53 +1,53 @@
 document.addEventListener('DOMContentLoaded', () => {
-    const encryptBtn = document.getElementById('encryptBtn');
-    const decryptBtn = document.getElementById('decryptBtn');
-    const dataInput = document.getElementById('data');
-    const keyInput = document.getElementById('key');
-    const resultDiv = document.getElementById('result');
-  
-    encryptBtn.addEventListener('click', async () => {
-      const data = dataInput.value.trim();
-      const key = keyInput.value.trim();
-      if (data === '' || key === '') {
-        showError('Please enter data and key.');
-        return;
-      }
-  
-      const encryptedData = await encryptData(data, key);
-      displayResult(`Encrypted Data: ${encryptedData}`);
-    });
-  
-    decryptBtn.addEventListener('click', async () => {
-      const encryptedData = dataInput.value.trim();
-      const key = keyInput.value.trim();
-      if (encryptedData === '' || key === '') {
-        showError('Please enter encrypted data and key.');
-        return;
-      }
-  
-      try {
-        const decryptedData = await decryptData(encryptedData, key);
-        displayResult(`Decrypted Data: ${decryptedData}`);
-      } catch (error) {
-        showError('Decryption error: Incorrect key or data.');
-      }
-    });
-  
-    async function encryptData(data, key) {
-      return CryptoJS.AES.encrypt(data, key).toString();
+  const encryptBtn = document.getElementById('encryptBtn');
+  const decryptBtn = document.getElementById('decryptBtn');
+  const dataInput = document.getElementById('data');
+  const keyInput = document.getElementById('key');
+  const resultDiv = document.getElementById('result');
+
+  encryptBtn.addEventListener('click', async () => {
+    const data = dataInput.value.trim();
+    const key = keyInput.value.trim();
+    if (data === '' || key === '') {
+      showError('Please enter data and key.');
+      return;
     }
-  
-    async function decryptData(encryptedData, key) {
-      const bytes = CryptoJS.AES.decrypt(encryptedData, key);
-      return bytes.toString(CryptoJS.enc.Utf8);
+
+    const encryptedData = await encryptData(data, key);
+    displayResult(`Encrypted Data: ${encryptedData}`);
+  });
+
+  decryptBtn.addEventListener('click', () => {
+    const encryptedData = dataInput.value.trim();
+    const key = keyInput.value.trim();
+    if (encryptedData === '' || key === '') {
+      showError('Please enter encrypted data and key.');
+      return;
     }
-  
-    function displayResult(message) {
-      resultDiv.innerHTML = message;
-    }
-  
-    function showError(message) {
-      resultDiv.innerHTML = `<span style="color: red;">${message}</span>`;
+
+    try {
+      const decryptedData = decryptData(encryptedData, key);
+      displayResult(`Decrypted Data: ${decryptedData}`);
+    } catch (error) {
+      console.error('Decryption error:', error);
+      showError('Decryption failed. Incorrect key or data.');
     }
   });
-  
+
+  function encryptData(data, key) {
+    return CryptoJS.AES.encrypt(data, key).toString();
+  }
+
+  function decryptData(encryptedData, key) {
+    const bytes = CryptoJS.AES.decrypt(encryptedData, key);
+    return bytes.toString(CryptoJS.enc.Utf8);
+  }
+
+  function displayResult(message) {
+    resultDiv.innerHTML = message;
+  }
+
+  function showError(message) {
+    resultDiv.innerHTML = `<span style="color: red;">${message}</span>`;
+  }
+});
